@@ -74,11 +74,7 @@ for(i in 1:46){
 }
 
 
-<<<<<<< Updated upstream:BSVD/test_varrank.R
-# lmax 구하기..
-=======
-# lmax ���ϱ�..
->>>>>>> Stashed changes:test_varrank.R
+# Compute lmax 
 a = svd(E_tilda)$d[1]^2 * phi^2 * sum(svd(E_tilda)$d^2) * max(svd(E_tilda)$d^2/sum(svd(E_tilda)$d^2))
 
 
@@ -88,37 +84,23 @@ eigen_test(X)
 
 
 ### functions 
-<<<<<<< Updated upstream:BSVD/test_varrank.R
-# Moment 구하는 함수 test
+# Test the function that calculate the moments of normal distribution
 sourceCpp("/Users/seoyoung/Desktop/Meeting/bayesian_svd/bsvd_varrank/functions/ln2moment.cpp")
-ln2moment(1,2,10)  # log(1) log(4) (성공)
-=======
-# Moment ���ϴ� �Լ� test
-sourceCpp("/Users/seoyoung/Desktop/Meeting/bayesian_svd/bsvd_varrank/functions/ln2moment.cpp")
-ln2moment(1,2,10)  # log(1) log(4) (����)
->>>>>>> Stashed changes:test_varrank.R
+ln2moment(1,2,10)  # log(1) log(4) success
 
 sourceCpp("/Users/seoyoung/Desktop/Meeting/bayesian_svd/bsvd_varrank/lcr.cpp")
 lcr(c(0.4,0.3,0.2,0.1),20)
 lcr_my()
 
 
-<<<<<<< Updated upstream:BSVD/test_varrank.R
-# 3,4차 방정식 test (성공)
-=======
-# 3,4�� ������ test (����)
->>>>>>> Stashed changes:test_varrank.R
+# Test the function that find the roots of equations test (success)
 sourceCpp("/Users/seoyoung/Desktop/Meeting/bayesian_svd/bsvd_varrank/functions/roots_cubic.cpp")
 roots_cubic(-3,2,0)  # roots : 0,1,2
 sourceCpp("/Users/seoyoung/Desktop/Meeting/bayesian_svd/bsvd_varrank/functions/roots_quartic.cpp")
 roots_quartic(-6,11,-6,0)  # roots : 0,1,2,3
 
 
-<<<<<<< Updated upstream:BSVD/test_varrank.R
-# d 뽑는 rxl 함수 test (성공)
-=======
-# d �̴� rxl �Լ� test (����)
->>>>>>> Stashed changes:test_varrank.R
+# Test the function that sample d : rxl (success)
 sourceCpp("/Users/seoyoung/Desktop/Meeting/bayesian_svd/bsvd_varrank/functions/rxl.cpp")
 rxl(mu = 1, sigma=1, 50, nu=1)
 
@@ -143,11 +125,7 @@ l=50
 nu=1
 
 
-<<<<<<< Updated upstream:BSVD/test_varrank.R
-# Sample 함수 test(성공)
-=======
-# Sample �Լ� test(����)
->>>>>>> Stashed changes:test_varrank.R
+# Test the Sample function (success)
 sourceCpp("/Users/seoyoung/Desktop/Meeting/bayesian_svd/bsvd_varrank/sample_my.cpp")
 sample_samp = sample_N(50, 1000, 1:50)
 
@@ -155,11 +133,7 @@ hist(sample_samp)
 par(mfrow=c(1,1))
 
 
-<<<<<<< Updated upstream:BSVD/test_varrank.R
-# (u, v) joint에서 뽑는 ruv 함수(아마도 성공)
-=======
-# (u, v) joint���� �̴� ruv �Լ�(�Ƹ��� ����)
->>>>>>> Stashed changes:test_varrank.R
+# Test the function that sample (u, v) from joint distribution : ruv (success)
 set.seed(529)
 A = matrix(sample(1:20, 20, 1), nrow = 5)
 sourceCpp("/Users/seoyoung/Desktop/Meeting/bayesian_svd/bsvd_varrank/ruv_A.cpp")

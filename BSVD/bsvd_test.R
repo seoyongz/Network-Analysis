@@ -115,11 +115,7 @@ D<-diag( c(sY$d[seq(1,K0,length=K0)],rep(0,n-K0)))
 ###################################################################
 ########################## Gibbs Sampling #########################
 ###################################################################
-<<<<<<< Updated upstream:BSVD/bsvd_test.R
-# BSVD rcpp ½ÇÇà(variable rank)
-=======
-# BSVD rcpp ����(variable rank)
->>>>>>> Stashed changes:bsvd_test.R
+# BSVD (variable rank)
 sourceCpp("/Users/seoyoung/Desktop/Meeting/bayesian_svd/bsvd_varrank/bsvd_var2.cpp")
 
 BSVD_result = BSVD_var(Y=Y, U=U, D=D, V=V, llb=50, lub=7500,
