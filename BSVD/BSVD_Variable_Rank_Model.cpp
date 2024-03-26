@@ -80,7 +80,7 @@ int sample_N(int startN, int Nmax, arma::vec prob){
 ///////////////////////////////////////////////////////////////////////
 ///////////// Find roots for cubic and quartic equation. //////////////
 ///////////////////////////////////////////////////////////////////////
-// 3Â÷ ¹æÁ¤½Ä ÇØ ±¸ÇÏ´Â ÇÔ¼ö
+// 3ì°¨ ë°©ì •ì‹ í•´ êµ¬í•˜ëŠ” í•¨ìˆ˜
 typedef std::complex<double> dcomplex;
 cx_vec roots_cubic(const dcomplex a2, const dcomplex a1, const dcomplex a0) {
   dcomplex Q, R, D, S, T;
@@ -89,7 +89,7 @@ cx_vec roots_cubic(const dcomplex a2, const dcomplex a1, const dcomplex a0) {
   R = (dcomplex(9.0)*a2*a1 - dcomplex(27.0)*a0 - dcomplex(2.0)*std::pow(a2, 3.0))/dcomplex(54.0);
   D = std::pow(Q, 3) + std::pow(R, 2);
   
-  S = std::pow( R + std::pow(D, 0.5), 0.3333333333333333); // ¿Ö ¶§¹®ÀÎÁö 1/3·ÎÇÏ¸é °è»êÀÌ ¾ÈµÊ...
+  S = std::pow( R + std::pow(D, 0.5), 0.3333333333333333); // ì™œ ë•Œë¬¸ì¸ì§€ 1/3ë¡œí•˜ë©´ ê³„ì‚°ì´ ì•ˆë¨...
   T = std::pow( R - std::pow(D, 0.5), 0.3333333333333333);
   
   arma::cx_vec roots(3);
@@ -100,7 +100,7 @@ cx_vec roots_cubic(const dcomplex a2, const dcomplex a1, const dcomplex a0) {
   return(roots);
 }
 
-// 4Â÷ ¹æÁ¤½Ä ÇØ ±¸ÇÏ´Â ÇÔ¼ö
+// 4ì°¨ ë°©ì •ì‹ í•´ êµ¬í•˜ëŠ” í•¨ìˆ˜
 arma::cx_vec roots_quartic(dcomplex a3, dcomplex a2, dcomplex a1, dcomplex a0) {
   
   arma::cx_vec z3 = roots_cubic(-a2, a1*a3-dcomplex(4.0)*a0, dcomplex(4.0)*a2*a0 -a1*a1-a3*a3*a0);
@@ -286,7 +286,7 @@ double rxl(const double mu, const double sigma, const int l, double nu){
   
   cx_vec z4 = roots_quartic(a, b, c, d);
   
-  // ½Ç±ÙÀÇ °¹¼ö -> xc(root vector) Å©±â ÁöÁ¤
+  // ì‹¤ê·¼ì˜ ê°¯ìˆ˜ -> xc(root vector) í¬ê¸° ì§€ì •
   for(i=0; i < z4.n_elem; i++){
     if(std::abs(imag(z4[i])) < tol){
       count += 1;
@@ -318,7 +318,7 @@ double rxl(const double mu, const double sigma, const int l, double nu){
 
 
 ///////////////////////////////////////////////////////////////////////
-////////////////////////// Step A¿¡¼­ u, v »Ì±â //////////////////////
+////////////////////////// Step Aì—ì„œ u, v ë½‘ê¸° //////////////////////
 ///////////////////////////////////////////////////////////////////////
 Rcpp::List ruv_A(arma::mat A, const int nsamp=25) {
   int i, j, t;
@@ -509,7 +509,7 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
       ////////////////////////////////////////////////////////
       
       // Infinite sum part
-      // lmax Á¤ÇÏ±â
+      // lmax ì •í•˜ê¸°
       arma::vec z = arma::svd(E_tilde);
       z = arma::pow(z, 2);
       E02 = arma::sum(z);
@@ -554,7 +554,7 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
         lt(l) = la(l) + lb(l) + lc(l);
       }
       
-      // A-(1) ¿¡¼­ summation part °è»ê : lpe_r10
+      // A-(1) ì—ì„œ summation part ê³„ì‚° : lpe_r10
       lpe_r10 = max(lt) + log(arma::sum(exp(lt - max(lt))));
       
       
@@ -574,7 +574,7 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
       
       
       
-      // {dj!=0} ÀÌ¸é Sample dj from infinite mixture, Sample(u[,j], v[,j]) from joint dist
+      // {dj!=0} ì´ë©´ Sample dj from infinite mixture, Sample(u[,j], v[,j]) from joint dist
       arma::vec pdl(lmax+1, fill::zeros);
       arma::vec lvec(lmax+1, fill::zeros);
       
@@ -635,7 +635,7 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
     for(j=0; j<Ycol; j++){    // j-th column gibbs update
       col_j = col_ind(j);
       
-      if(Dmat(col_j, col_j) != 0){          // d_j °¡ 0ÀÌ ¾Æ´Ò¶§
+      if(Dmat(col_j, col_j) != 0){          // d_j ê°€ 0ì´ ì•„ë‹ë•Œ
         nrank += 1;
         // // Construct U[, -j] and V[, -j]
         for(k=0; k<col_j; k++){             // column index
