@@ -92,7 +92,7 @@ cx_vec roots_cubic(const dcomplex a2, const dcomplex a1, const dcomplex a0) {
   R = (dcomplex(9.0)*a2*a1 - dcomplex(27.0)*a0 - dcomplex(2.0)*std::pow(a2, 3.0))/dcomplex(54.0);
   D = std::pow(Q, 3) + std::pow(R, 2);
   
-  S = std::pow( R + std::pow(D, 0.5), 0.3333333333333333); // �� �������� 1/3���ϸ� ����� �ȵ�...
+  S = std::pow( R + std::pow(D, 0.5), 0.3333333333333333); // 1.0/3.0
   T = std::pow( R - std::pow(D, 0.5), 0.3333333333333333);
   
   arma::cx_vec roots(3);
@@ -291,7 +291,6 @@ double rxl(const double mu, const double sigma, const int l, double nu){
   
   cx_vec z4 = roots_quartic(a, b, c, d);
   
-  // �Ǳ��� ���� -> xc(root vector) ũ�� ����
   for(i=0; i < z4.n_elem; i++){
     if(std::abs(imag(z4[i])) < tol){
       count += 1;
@@ -323,7 +322,7 @@ double rxl(const double mu, const double sigma, const int l, double nu){
 
 
 ///////////////////////////////////////////////////////////////////////
-////////////////////////// Step A���� u, v �̱� //////////////////////
+///////////////////////////// Sample u and v //////////////////////////
 ///////////////////////////////////////////////////////////////////////
 Rcpp::List ruv_A(arma::mat A, const int nsamp=25) {
   int i, j, t;
@@ -446,7 +445,7 @@ Rcpp::List BSVD_fixed(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const 
     // nrank = 0;
     for(j=0; j<Ycol; j++){    // j-th column updatae with gibbs sampler
 
-      if(Dmat(j, j) != 0){          // d_j �� 0�� �ƴҶ�
+      if(Dmat(j, j) != 0){          // when d_j != 0
         // nrank += 1;
         
         // // Setting U[, -j] and V[, -j], D[-j, -j]

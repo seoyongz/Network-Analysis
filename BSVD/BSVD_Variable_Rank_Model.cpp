@@ -80,7 +80,11 @@ int sample_N(int startN, int Nmax, arma::vec prob){
 ///////////////////////////////////////////////////////////////////////
 ///////////// Find roots for cubic and quartic equation. //////////////
 ///////////////////////////////////////////////////////////////////////
+<<<<<<< Updated upstream:BSVD/BSVD_Variable_Rank_Model.cpp
 // 3차 방정식 해 구하는 함수
+=======
+// 3�� ������ �� ���ϴ� �Լ�
+>>>>>>> Stashed changes:BSVD_Variable_Rank_Model.cpp
 typedef std::complex<double> dcomplex;
 cx_vec roots_cubic(const dcomplex a2, const dcomplex a1, const dcomplex a0) {
   dcomplex Q, R, D, S, T;
@@ -89,7 +93,11 @@ cx_vec roots_cubic(const dcomplex a2, const dcomplex a1, const dcomplex a0) {
   R = (dcomplex(9.0)*a2*a1 - dcomplex(27.0)*a0 - dcomplex(2.0)*std::pow(a2, 3.0))/dcomplex(54.0);
   D = std::pow(Q, 3) + std::pow(R, 2);
   
+<<<<<<< Updated upstream:BSVD/BSVD_Variable_Rank_Model.cpp
   S = std::pow( R + std::pow(D, 0.5), 0.3333333333333333); // 왜 때문인지 1/3로하면 계산이 안됨...
+=======
+  S = std::pow( R + std::pow(D, 0.5), 0.3333333333333333); // �� �������� 1/3���ϸ� ����� �ȵ�...
+>>>>>>> Stashed changes:BSVD_Variable_Rank_Model.cpp
   T = std::pow( R - std::pow(D, 0.5), 0.3333333333333333);
   
   arma::cx_vec roots(3);
@@ -100,7 +108,11 @@ cx_vec roots_cubic(const dcomplex a2, const dcomplex a1, const dcomplex a0) {
   return(roots);
 }
 
+<<<<<<< Updated upstream:BSVD/BSVD_Variable_Rank_Model.cpp
 // 4차 방정식 해 구하는 함수
+=======
+// 4�� ������ �� ���ϴ� �Լ�
+>>>>>>> Stashed changes:BSVD_Variable_Rank_Model.cpp
 arma::cx_vec roots_quartic(dcomplex a3, dcomplex a2, dcomplex a1, dcomplex a0) {
   
   arma::cx_vec z3 = roots_cubic(-a2, a1*a3-dcomplex(4.0)*a0, dcomplex(4.0)*a2*a0 -a1*a1-a3*a3*a0);
@@ -286,7 +298,11 @@ double rxl(const double mu, const double sigma, const int l, double nu){
   
   cx_vec z4 = roots_quartic(a, b, c, d);
   
+<<<<<<< Updated upstream:BSVD/BSVD_Variable_Rank_Model.cpp
   // 실근의 갯수 -> xc(root vector) 크기 지정
+=======
+  // �Ǳ��� ���� -> xc(root vector) ũ�� ����
+>>>>>>> Stashed changes:BSVD_Variable_Rank_Model.cpp
   for(i=0; i < z4.n_elem; i++){
     if(std::abs(imag(z4[i])) < tol){
       count += 1;
@@ -318,7 +334,11 @@ double rxl(const double mu, const double sigma, const int l, double nu){
 
 
 ///////////////////////////////////////////////////////////////////////
+<<<<<<< Updated upstream:BSVD/BSVD_Variable_Rank_Model.cpp
 ////////////////////////// Step A에서 u, v 뽑기 //////////////////////
+=======
+////////////////////////// Step A���� u, v �̱� //////////////////////
+>>>>>>> Stashed changes:BSVD_Variable_Rank_Model.cpp
 ///////////////////////////////////////////////////////////////////////
 Rcpp::List ruv_A(arma::mat A, const int nsamp=25) {
   int i, j, t;
@@ -509,7 +529,11 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
       ////////////////////////////////////////////////////////
       
       // Infinite sum part
+<<<<<<< Updated upstream:BSVD/BSVD_Variable_Rank_Model.cpp
       // lmax 정하기
+=======
+      // lmax ���ϱ�
+>>>>>>> Stashed changes:BSVD_Variable_Rank_Model.cpp
       arma::vec z = arma::svd(E_tilde);
       z = arma::pow(z, 2);
       E02 = arma::sum(z);
@@ -554,7 +578,11 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
         lt(l) = la(l) + lb(l) + lc(l);
       }
       
+<<<<<<< Updated upstream:BSVD/BSVD_Variable_Rank_Model.cpp
       // A-(1) 에서 summation part 계산 : lpe_r10
+=======
+      // A-(1) ���� summation part ��� : lpe_r10
+>>>>>>> Stashed changes:BSVD_Variable_Rank_Model.cpp
       lpe_r10 = max(lt) + log(arma::sum(exp(lt - max(lt))));
       
       
@@ -574,7 +602,11 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
       
       
       
+<<<<<<< Updated upstream:BSVD/BSVD_Variable_Rank_Model.cpp
       // {dj!=0} 이면 Sample dj from infinite mixture, Sample(u[,j], v[,j]) from joint dist
+=======
+      // {dj!=0} �̸� Sample dj from infinite mixture, Sample(u[,j], v[,j]) from joint dist
+>>>>>>> Stashed changes:BSVD_Variable_Rank_Model.cpp
       arma::vec pdl(lmax+1, fill::zeros);
       arma::vec lvec(lmax+1, fill::zeros);
       
@@ -635,7 +667,11 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
     for(j=0; j<Ycol; j++){    // j-th column gibbs update
       col_j = col_ind(j);
       
+<<<<<<< Updated upstream:BSVD/BSVD_Variable_Rank_Model.cpp
       if(Dmat(col_j, col_j) != 0){          // d_j 가 0이 아닐때
+=======
+      if(Dmat(col_j, col_j) != 0){          // d_j �� 0�� �ƴҶ�
+>>>>>>> Stashed changes:BSVD_Variable_Rank_Model.cpp
         nrank += 1;
         // // Construct U[, -j] and V[, -j]
         for(k=0; k<col_j; k++){             // column index
