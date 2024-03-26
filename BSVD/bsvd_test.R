@@ -1,7 +1,7 @@
 library(Rcpp)
 library(RcppArmadillo)
 
-# # BSVD rcpp ½ÇÇà(fixed rank)
+# # BSVD rcpp Â½Ã‡Ã‡Ã (fixed rank)
 # set.seed(227)
 # sourceCpp("/Users/seoyoung/Desktop/Meeting/bayesian_svd/bsvd_my2.cpp")
 # BSVD_result = BSVD_my(Y=Y, U=U, D=D, V=V,
@@ -116,7 +116,7 @@ D<-diag( c(sY$d[seq(1,K0,length=K0)],rep(0,n-K0)))
 ###################################################################
 ########################## Gibbs Sampling #########################
 ###################################################################
-# BSVD rcpp ½ÇÇà(variable rank)
+# BSVD rcpp Â½Ã‡Ã‡Ã (variable rank)
 sourceCpp("/Users/seoyoung/Desktop/Meeting/bayesian_svd/bsvd_varrank/bsvd_var2.cpp")
 
 BSVD_result = BSVD_var(Y=Y, U=U, D=D, V=V, llb=50, lub=7500,
