@@ -74,7 +74,7 @@ for(i in 1:46){
 }
 
 
-# lmax ±¸ÇÏ±â..
+# lmax êµ¬í•˜ê¸°..
 a = svd(E_tilda)$d[1]^2 * phi^2 * sum(svd(E_tilda)$d^2) * max(svd(E_tilda)$d^2/sum(svd(E_tilda)$d^2))
 
 
@@ -84,23 +84,23 @@ eigen_test(X)
 
 
 ### functions 
-# Moment ±¸ÇÏ´Â ÇÔ¼ö test
+# Moment êµ¬í•˜ëŠ” í•¨ìˆ˜ test
 sourceCpp("/Users/seoyoung/Desktop/Meeting/bayesian_svd/bsvd_varrank/functions/ln2moment.cpp")
-ln2moment(1,2,10)  # log(1) log(4) (¼º°ø)
+ln2moment(1,2,10)  # log(1) log(4) (ì„±ê³µ)
 
 sourceCpp("/Users/seoyoung/Desktop/Meeting/bayesian_svd/bsvd_varrank/lcr.cpp")
 lcr(c(0.4,0.3,0.2,0.1),20)
 lcr_my()
 
 
-# 3,4Â÷ ¹æÁ¤½Ä test (¼º°ø)
+# 3,4ì°¨ ë°©ì •ì‹ test (ì„±ê³µ)
 sourceCpp("/Users/seoyoung/Desktop/Meeting/bayesian_svd/bsvd_varrank/functions/roots_cubic.cpp")
 roots_cubic(-3,2,0)  # roots : 0,1,2
 sourceCpp("/Users/seoyoung/Desktop/Meeting/bayesian_svd/bsvd_varrank/functions/roots_quartic.cpp")
 roots_quartic(-6,11,-6,0)  # roots : 0,1,2,3
 
 
-# d »Ì´Â rxl ÇÔ¼ö test (¼º°ø)
+# d ë½‘ëŠ” rxl í•¨ìˆ˜ test (ì„±ê³µ)
 sourceCpp("/Users/seoyoung/Desktop/Meeting/bayesian_svd/bsvd_varrank/functions/rxl.cpp")
 rxl(mu = 1, sigma=1, 50, nu=1)
 
@@ -125,7 +125,7 @@ l=50
 nu=1
 
 
-# Sample ÇÔ¼ö test(¼º°ø)
+# Sample í•¨ìˆ˜ test(ì„±ê³µ)
 sourceCpp("/Users/seoyoung/Desktop/Meeting/bayesian_svd/bsvd_varrank/sample_my.cpp")
 sample_samp = sample_N(50, 1000, 1:50)
 
@@ -133,7 +133,7 @@ hist(sample_samp)
 par(mfrow=c(1,1))
 
 
-# (u, v) joint¿¡¼­ »Ì´Â ruv ÇÔ¼ö(¾Æ¸¶µµ ¼º°ø)
+# (u, v) jointì—ì„œ ë½‘ëŠ” ruv í•¨ìˆ˜(ì•„ë§ˆë„ ì„±ê³µ)
 set.seed(529)
 A = matrix(sample(1:20, 20, 1), nrow = 5)
 sourceCpp("/Users/seoyoung/Desktop/Meeting/bayesian_svd/bsvd_varrank/ruv_A.cpp")
