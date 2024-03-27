@@ -1,0 +1,15 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "g++",
+            "args": ["-std=c++11", "-o", "BSVD_Fixed_rank_model", "BSVD_Fixed_rank_model.cpp", "-larmadillo"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
