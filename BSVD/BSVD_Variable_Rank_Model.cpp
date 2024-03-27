@@ -2,6 +2,7 @@
 // [[Rcpp::plugins(cpp11)]]
 // [[Rcpp::depends(RcppEigen)]]
 
+#define ARMA_64BIT_WORD
 #include <RcppArmadillo.h>
 using namespace arma;
 #include <Rcpp.h>
@@ -453,7 +454,7 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
         for(i=0; i<Ycol; i++) V_j(i, k-1) = Vmat(i, k);
         D_j(k-1, k-1) = Dmat(k, k);
       }
-      
+      // Rprintf("error 01 - %d\n", col_j);
       
       // // Construct E_{-j} = Y - U[,-j]D[-j,-j]V[,-j]^T matrix
       arma::mat U_jD_j(Yrow, Ycol-1, fill::zeros);
@@ -477,6 +478,7 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
           E_j(i, l) = Y(i, l) - UDV_j(i, l);
         }
       }
+      // Rprintf("error 02 - %d\n", col_j);
     
   
       
@@ -485,6 +487,7 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
       arma::mat Nv = Null(V_j);
       n0 = Nv.n_cols;
       m0 = Nu.n_cols;
+      // Rprintf("error 03 - %d\n", col_j);
 
 
       
@@ -505,6 +508,7 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
           }
         }
       }
+      // Rprintf("error 04 - %d\n", col_j);
 
       
       ////////////////////////////////////////////////////////
@@ -526,6 +530,7 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
       if(lcrit < llb) lcrit = llb; 
       if(lcrit > lub) lcrit = lub;
       lmax = 2*std::floor(lcrit/2);
+      // Rprintf("error 05 - %d\n", col_j);
     
       
       
@@ -544,7 +549,7 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
           lb(l) = 0.5*std::log(psi/(phi+psi)) + (l*1.0)*std::log(1.0/(phi+psi)) + ( std::lgamma(2.0*l+1.0) - std::lgamma((l*1.0)+1.0) - (l*1.0)*std::log(2.0) );
         }
       }
-      // Rprintf("error in Step A 3 - %d\n", j);
+      // Rprintf("error 06 - %d\n", col_j);
       
       arma::dvec lc(lmax+1, fill::zeros);
       arma::dvec lt(lmax+1, fill::zeros);
@@ -559,7 +564,7 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
       
       // Compute summation part in A-(1): lpe_r10
       lpe_r10 = max(lt) + log(arma::sum(exp(lt - max(lt))));
-      
+      // Rprintf("error 07 - %d\n", col_j);
       
       
       // Sample dj from ({dj!=0}, {dj=0})
@@ -574,7 +579,7 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
       
       odds_dj = 1.0/(1.0 + std::exp(-(lor + lpe_r10)));
       newd_tmp = R::rbinom(1, odds_dj);
-      
+      // Rprintf("error 08 - %d\n", col_j);
       
       
       // If {dj!=0}, Sample dj from infinite mixture, Sample(u[,j], v[,j]) from joint dist
@@ -592,7 +597,6 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
         if(l_samp > 0 & mu!=0) del = rxl( mu*psi/(psi+phi), std::sqrt(1.0/(phi+psi)), l_samp, 1 );
         if(l_samp > 0 & mu==0) del = std::sqrt( R::rchisq(2.0*l_samp + 1.0)/(phi + psi) );
         if(l_samp == 0) del = R::rnorm(mu*psi/(psi + phi), std::sqrt( 1/(phi + psi)));
-        // Rprintf("error in Step A 4 - %d\n", j);
         
         // Sample (U[,j], V[,j])
         Rcpp::List uv_samp = ruv_A(E_tilde*phi*del);
@@ -616,10 +620,8 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
         for(l=0; l<Ycol; l++){Vmat(l, col_j) = 0.0;}
         Dmat(col_j, col_j) = 0.0;
       }
-      // Rprintf("Check del : %f\n", del);
 
     } // end Step A(iteration for j (column))
-  
     
 
     
@@ -652,7 +654,7 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
           D_j(k-1, k-1) = Dmat(k, k);
         }
         
-        
+        // Rprintf("error 09 - %d\n", col_j);
         
         // // Construct E(-j) matrix
         arma::mat U_jD_j(Yrow, Ycol-1, fill::zeros);
@@ -676,7 +678,7 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
             E_j(i, l) = Y(i, l) - UDV_j(i, l);
           }
         }
-        
+        // Rprintf("error 10 - %d\n", col_j);
         
         
         // // Compute Null(-j) matrix
@@ -684,7 +686,7 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
         arma::mat Nv = Null(V_j); 
         n0 = Nv.n_cols;
         m0 = Nu.n_cols;
-        // Rprintf("error in Step B 2 - %d\n", j);
+        // Rprintf("error 11 - %d\n", col_j);
         
         
        
@@ -707,6 +709,8 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
         }
         v_param = phi*Dmat(col_j, col_j)*v_param;
         arma::vec vj = rvmf(v_param);
+
+        // Rprintf("error 12 - %d\n", col_j);
         
         // Update V[,j]
         for(l=0; l<Ycol; l++){
@@ -734,6 +738,7 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
         }
         u_param = phi*Dmat(col_j, col_j)*u_param;
         arma::vec newu = rvmf(u_param);
+        // Rprintf("error 13 - %d\n", col_j);
         
         // Update U[,j]
         for(i=0; i<Yrow; i++){
@@ -743,7 +748,6 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
           }
         }
         
-        // Rprintf("error in Step B 3 - %d\n", j);
         
         
         
@@ -765,6 +769,7 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
         
         // Sampling d(j)
         Dmat(col_j, col_j) = R::rnorm(d_mu, d_sd);
+        // Rprintf("error 14 - %d\n", col_j);
         
       } // End iteration for update columns of  U, D, V when D[j,j]!=0
     }
@@ -800,6 +805,7 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
         }
       }
     }
+    // Rprintf("error 15 - %d\n", col_j);
     
     double Y_UDV_norm = 0.0;
     for(i=0; i<Yrow; i++){
@@ -813,7 +819,7 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
     
     // Sampling
     phi = R::rgamma(phi_post_a, 1.0/phi_post_b);
-    
+    // Rprintf("error 16 - %d\n", col_j);
     
     
     // Update mu
@@ -827,7 +833,7 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
     
     // Sampling
     mu = R::rnorm(mu_post_mean, mu_post_sd);
-    
+    // Rprintf("error 17 - %d\n", col_j);
     
     
     
@@ -841,7 +847,7 @@ Rcpp::List BSVD_var(arma::mat Y, arma::mat U, arma::mat V, arma::mat D, const in
 
     // Sampling
     psi = R::rgamma(psi_post_a, 1.0/psi_post_b);
-    
+    // Rprintf("error 18 - %d\n", col_j);
     
     
     
