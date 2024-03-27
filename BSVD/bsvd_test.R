@@ -116,11 +116,11 @@ D<-diag( c(sY$d[seq(1,K0,length=K0)],rep(0,n-K0)))
 ########################## Gibbs Sampling #########################
 ###################################################################
 # BSVD (variable rank)
-sourceCpp("/Users/seoyoung/Desktop/Meeting/bayesian_svd/bsvd_varrank/bsvd_var2.cpp")
+sourceCpp("/Users/seoyoung/Desktop/yonsei_study/papers/BSVD/BSVD/BSVD_Variable_Rank_Model.cpp")
 
 BSVD_result = BSVD_var(Y=Y, U=U, D=D, V=V, llb=50, lub=7500,
-                       niter=20000, nburn=10000, nthin=10, nprint=500,
-                       premu0=premu0, mu0=mu0, nu0=nu0, t20=t20, eta0=eta0, s20=s20)
+                       niter=200, nburn=100, nthin=1, nprint=10, nsamp=10,
+                       mu_pr_precision=premu0, mu_pr_mean=mu0, nu0=nu0, t20=t20, eta0=eta0, s20=s20)
 
 
 # save(BSVD_result, file="/Users/seoyoung/Desktop/Meeting/bayesian_svd/bsvd_varrank/Simul_100x10_1.rda")
@@ -212,7 +212,7 @@ plot(Dsamp[2,2,], type='l')
 ###################################################################
 # CH6. Extension simulation Data
 Y = data$Y
-# U = svd(Y)$u
+U = svd(Y)$u
 V = svd(Y)$v
 D = diag(svd(Y)$d)
 data=structure(list(Y = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
